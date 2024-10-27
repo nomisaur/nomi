@@ -10,11 +10,14 @@ import localForage from "localforage";
 import _clone from "rfdc";
 const clone = _clone();
 
+export const initialState: State = { chapter: 0 };
+
 export type State = {
   name?: string;
+  chapter: number;
 };
 
-export const initialState: State = {};
+export type HandleState = (handler: Handler, payload?: any) => void;
 
 export const log = (...args: any[]) => {
   if (true) {
@@ -22,14 +25,18 @@ export const log = (...args: any[]) => {
   }
 };
 
-export const GunGirlContext = createContext({});
+export const GunGirlContext = createContext<{
+  state: State;
+  handleState: HandleState;
+}>({
+  state: initialState,
+  handleState: () => {},
+});
 export const useGunGirlContext = () => useContext(GunGirlContext);
 
 type Handler = (state: State, payload: any) => State;
 
-export const useFancyReducer = (
-  initialState: State
-): [State, (handler: Handler, payload?: any) => void] => {
+export const useFancyReducer = (initialState: State): [State, HandleState] => {
   const [state, handleState] = useReducer(
     (state: State, [handler, payload]: [Handler, any]) => {
       const clonedState = clone(state);

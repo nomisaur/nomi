@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "nomi's gay-ass website",
+  title: "nomi's gay ass website",
   description: "it's gay!",
 };
 

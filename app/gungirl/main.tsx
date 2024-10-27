@@ -1,7 +1,8 @@
 "use client";
 import { useGunGirlContext } from "./state";
+import { chapters } from "./chapters";
+
 export const Main = () => {
-  const context = useGunGirlContext();
-  console.log(context);
-  return <div>hi</div>;
+  const { state, handleState } = useGunGirlContext();
+  return chapters[state.chapter]();
 };
