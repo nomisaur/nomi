@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import {
   useFancyReducer,
   initialState,

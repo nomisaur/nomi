@@ -1,11 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useReducer,
-  useContext,
-  createContext,
-} from "react";
+import { useReducer, useContext, createContext } from "react";
 import localForage from "localforage";
 import _clone from "rfdc";
 const clone = _clone();
@@ -14,6 +7,7 @@ export const initialState: State = { chapter: 0 };
 
 export type State = {
   name?: string;
+  pronouns?: string;
   chapter: number;
 };
 

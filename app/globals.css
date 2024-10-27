@@ -19,3 +19,15 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+input {
+  background: darkblue;
+}
+
+button {
+  margin: 10px;
+  padding: 10px;
+  background: darkblue;
+  border-radius: 9999px;
+  border-width: 2px;
+}
