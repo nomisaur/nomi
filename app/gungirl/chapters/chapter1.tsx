@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGunGirlContext } from "../state";
 import { Clicker } from "@/components/clicker";
 export const Chapter1 = () => {
-  const { state, handleState } = useGunGirlContext();
+  // const { state, handleState } = useGunGirlContext();
   const [sleep, setSleep] = useState(false);
   const [cry, setCry] = useState(0);
 
