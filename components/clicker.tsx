@@ -9,7 +9,7 @@ export const Clicker = ({
 }: {
   children: any;
   onClick?: () => void;
-  clicked?: Boolean;
+  clicked?: boolean;
   className?: string;
   [x: string]: any;
 }) => {
