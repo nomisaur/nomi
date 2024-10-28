@@ -3,5 +3,9 @@ import { chapters } from "./chapters";
 
 export const Main = () => {
   const { state } = useGunGirlContext();
-  return chapters[state.chapter]();
+  return (
+    <div className="flex justify-center">
+      <div className="max-w-prose">{chapters[state.chapter]()}</div>
+    </div>
+  );
 };

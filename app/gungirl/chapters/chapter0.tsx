@@ -11,7 +11,7 @@ export const Chapter0 = () => {
       return state;
     });
   return (
-    <div>
+    <div className="w-96">
       <div>Hello, my child, what is your name?</div>
       <input
         value={name}
@@ -29,8 +29,8 @@ export const Chapter0 = () => {
       {state.name && (
         <div>
           <div>
-            What are your pronouns,{" "}
-            <span className="capitalize">{state.name}</span>?
+            Ah, <span className="capitalize">{state.name}</span>, that's right.
+            Tell me, what are your pronouns?
           </div>
           <div>
             <Clicker
