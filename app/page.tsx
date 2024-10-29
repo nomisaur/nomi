@@ -4,7 +4,9 @@ export default function Home() {
   return (
     <>
       <div>hi</div>
-      <Link href="/gungirl">fuck</Link>
+      <Link href="/gungirl">
+        Click here to read Gun Girl, a silly little book I'm writing
+      </Link>
     </>
   );
 }
