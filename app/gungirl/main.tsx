@@ -10,7 +10,7 @@ export const Main = () => {
   const { state } = useGunGirlContext();
   return (
     <>
-      <div className="flex justify-center p-4">
+      <div className="justify-center p-4">
         <div className="max-w-prose w-full">
           {chapters.map((Chapter, index) =>
             state.chapter === index ? <Chapter key={index} /> : null

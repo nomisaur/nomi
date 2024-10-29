@@ -7,20 +7,23 @@ export const Flipper = () => {
   const { next, back } = useFlipper();
 
   return (
-    <div className="max-w-prose fixed bottom-0 w-full flex text-center">
-      <div
-        className="w-full m-1 bg-slate-900"
-        onClick={() => state.chapter > 0 && back()}
-      >
-        {"<"}
+    <>
+      <div className="h-10"></div>
+      <div className="max-w-prose fixed bottom-0 w-full flex text-center bg-opacity-95 bg-black">
+        <div
+          className="w-full m-1 mt-0 bg-slate-900"
+          onClick={() => state.chapter > 0 && back()}
+        >
+          {"<"}
+        </div>
+        <div className="m-1">{state.chapter}</div>
+        <div
+          className="w-full m-1 mt-0 bg-slate-900"
+          onClick={() => state.chapter < chapters.length - 1 && next()}
+        >
+          {">"}
+        </div>
       </div>
-      <div className="m-1">{state.chapter}</div>
-      <div
-        className="w-full m-1 bg-slate-900"
-        onClick={() => state.chapter < chapters.length - 1 && next()}
-      >
-        {">"}
-      </div>
-    </div>
+    </>
   );
 };
