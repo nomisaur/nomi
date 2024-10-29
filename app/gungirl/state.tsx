@@ -3,15 +3,23 @@ import localForage from "localforage";
 import _clone from "rfdc";
 const clone = _clone();
 
-export const initialState: State = { chapter: 0 };
+export type AnyObj = {
+  [key: string]: any;
+  [key: number]: any;
+  [key: symbol]: any;
+};
 
 export type State = {
   name?: string;
   pronouns?: string;
   chapter: number;
+  [key: number]: AnyObj;
 };
 
+export type Handler = (state: State, payload: any) => State;
 export type HandleState = (handler: Handler, payload?: any) => void;
+
+export const initialState: State = { chapter: 0 };
 
 export const log = (...args: any[]) => {
   if (true) {
@@ -28,18 +36,24 @@ export const GunGirlContext = createContext<{
 });
 export const useGunGirlContext = () => useContext(GunGirlContext);
 
-type Handler = (state: State, payload: any) => State;
+export const useChapter = (initialState: AnyObj) => {
+  const { state, handleState } = useGunGirlContext();
+  const chapterState = state[state.chapter] ?? initialState;
+  const setChapterState = (key: any, value: any) =>
+    handleState((state) => {
+      state[state.chapter] = {
+        ...chapterState,
+        [key]: value,
+      };
+      return state;
+    });
+  return { chapterState, setChapterState };
+};
 
 export const useFancyReducer = (initialState: State): [State, HandleState] => {
   const [state, handleState] = useReducer(
-    (state: State, [handler, payload]: [Handler, any]) => {
-      const clonedState = clone(state);
-      const newState = handler(clonedState, payload);
-      const handlerName = handler.name || "anonymous handler";
-      log(`state change (${handlerName})`, newState);
-      save(newState, `saved on ${handlerName}`);
-      return newState;
-    },
+    (state: State, [handler, payload]: [Handler, any]) =>
+      handler(clone(state), payload),
     initialState
   );
   return [
@@ -48,12 +62,12 @@ export const useFancyReducer = (initialState: State): [State, HandleState] => {
   ];
 };
 
-const stateKey = "savedState";
+const stateKey = "save";
 
-const save = (state: State, message = "saved") => {
+export const save = (state: State) => {
   localForage
     .setItem(stateKey, state)
-    .then(() => log(message))
+    .then(() => log("saved:", state))
     .catch(log);
 };
 

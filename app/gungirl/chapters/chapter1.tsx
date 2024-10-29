@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useGunGirlContext } from "../state";
+import { useChapter, useGunGirlContext } from "../state";
 import { Clicker } from "@/components/clicker";
 export const Chapter1 = () => {
-  // const { state, handleState } = useGunGirlContext();
-  const [sleep, setSleep] = useState(false);
-  const [cry, setCry] = useState(0);
+  const { handleState } = useGunGirlContext();
+  const {
+    chapterState: { sleep, cry },
+    setChapterState,
+  } = useChapter({ cry: 0, sleep: false });
+  const setCry = (n: number) => setChapterState("cry", n);
+  const setSleep = (n: boolean) => setChapterState("sleep", n);
 
   const renderChoices = (x: number) => {
     return (
@@ -26,14 +30,24 @@ export const Chapter1 = () => {
       <h1>Chapter 1</h1>
       <p>
         You were born a little baby child, baptized in the blood of your mother.
-        Despite the whispers, you were not born holding a gun. Nevertheless, the
-        nature of your story has invited many such ignorant rumors. Ah, how they
-        sting.
+        Years later people would say that you were born holding a gun, but the
+        truth is more sad and mundane. What happened was your mother lost so
+        much blood having you that she nearly died. The doctors called it a
+        massive postpartum hemorrhage. The amount of cold blood being hastily
+        infused into her gave her hypothermia, and in her near-death experience
+        she saw visions of your life to come and cried out in horror.
       </p>
       <p>
-        You needed to be held. You cried in your crib while your parents fought
-        in the other room. You heard the shouting, though your developing brain
-        could not make sense of it. You only felt the terror of it.
+        Your parents brought the trauma of your birth home with them in the
+        forested hills of the California Bay Area. You shared a room with your
+        three-year-old brother. Your mother fell into a depression and your
+        father punished her for it.
+      </p>
+      <p>
+        You were a baby. You needed to be held. You cried in your crib while
+        your parents fought in the other room. You heard the shouting, though
+        your developing brain could not make sense of it. You only felt the
+        terror of it.
       </p>
       {renderChoices(0)}
       {cry > 0 && (
@@ -58,8 +72,18 @@ export const Chapter1 = () => {
         <>
           <p>
             Despite your cries you were left all alone. Your nervous system
-            remembers. You fall asleep.
+            remembers. You fell asleep.
           </p>
+          <Clicker
+            onClick={() =>
+              handleState((state) => {
+                state.chapter = 2;
+                return state;
+              })
+            }
+          >
+            grow
+          </Clicker>
         </>
       )}
     </div>

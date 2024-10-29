@@ -11,7 +11,7 @@ export const Chapter0 = () => {
       return state;
     });
   return (
-    <div className="w-96">
+    <div className="">
       <div>Hello, my child, what is your name?</div>
       <input
         value={name}
@@ -25,6 +25,7 @@ export const Chapter0 = () => {
           }
         }}
         disabled={Boolean(state.name)}
+        placeholder="name"
       ></input>
       {state.name && (
         <div>

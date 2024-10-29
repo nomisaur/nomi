@@ -9,8 +9,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: black;
+    --foreground: white;
   }
 }
 
@@ -22,12 +22,15 @@ body {
 
 input {
   background: darkblue;
+  margin: 10px;
+  border-color: white;
 }
 
 button {
   min-width: 100px;
   margin: 10px;
-  padding: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   background: darkblue;
   border-radius: 9999px;
   border-width: 2px;

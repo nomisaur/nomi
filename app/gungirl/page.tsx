@@ -4,6 +4,7 @@ import {
   useFancyReducer,
   initialState,
   load,
+  save,
   log,
   State,
   GunGirlContext,
@@ -30,7 +31,7 @@ export default function Page() {
   useEffect(() => {
     load((savedState) => {
       if (savedState) {
-        log("loaded state:", savedState);
+        log("loaded:", savedState);
         handleState(() => savedState as State);
       } else {
         log("no save data");
@@ -38,6 +39,10 @@ export default function Page() {
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    save(state);
+  }, [state]);
 
   return loading ? (
     <div>gun girl</div>
