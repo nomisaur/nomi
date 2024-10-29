@@ -36,7 +36,7 @@ export const Chapter1 = () => {
 
   return (
     <div>
-      <Title>Birth</Title>
+      <Title>Mamma Mia</Title>
       <p>
         You were born a little baby child, baptized in the blood of your mother.
         Years later people would say that you were born holding a gun, but the
