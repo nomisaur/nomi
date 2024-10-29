@@ -1,27 +1,36 @@
 import { useState } from "react";
+import { useChapter, useGunGirlContext } from "../state";
 
 export const Clicker = ({
   children,
   onClick,
-  clicked,
   className = "",
+  id,
   ...rest
 }: {
+  id: string;
   children: any;
   onClick?: () => void;
-  clicked?: boolean;
   className?: string;
   [x: string]: any;
 }) => {
-  const [wasClicked, setWasClicked] = useState(clicked);
+  const { state, handleState } = useGunGirlContext();
+  const key = `${state.chapter}-${id}`;
+
   return (
     <button
       onClick={() => {
-        setWasClicked(true);
+        handleState((state) => {
+          state.clickedButtons = {
+            ...state.clickedButtons,
+            [key]: true,
+          };
+          return state;
+        });
         onClick?.();
       }}
       className={`${className} ${
-        wasClicked ? "border-white" : "border-transparent"
+        state.clickedButtons[key] ? "border-white" : "border-transparent"
       }`}
       {...rest}
     >

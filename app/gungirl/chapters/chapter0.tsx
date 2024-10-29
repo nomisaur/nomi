@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useGunGirlContext } from "../state";
+import { useChapter, useFlipper, useGunGirlContext } from "../state";
 import { Clicker } from "../components/clicker";
 
 export const Chapter0 = () => {
   const { state, handleState } = useGunGirlContext();
+  const { next } = useFlipper();
+  const { chapterState, setChapterState } = useChapter();
   const [name, setName] = useState(state.name || "");
   const setPronouns = (choice: string) =>
     handleState((state) => {
@@ -37,24 +39,24 @@ export const Chapter0 = () => {
             <Clicker
               onClick={() => setPronouns("he/him")}
               disabled={Boolean(state.pronouns)}
-              clicked={state.pronouns === "he/him"}
               className="w-100"
+              id="he"
             >
               {state.pronouns === "he/him" ? "she/her" : "he/him"}
             </Clicker>
             <Clicker
               onClick={() => setPronouns("she/her")}
               disabled={Boolean(state.pronouns)}
-              clicked={state.pronouns === "she/her"}
               className="w-100"
+              id="she"
             >
               {state.pronouns || "she/her"}
             </Clicker>
             <Clicker
               onClick={() => setPronouns("they/them")}
               disabled={Boolean(state.pronouns)}
-              clicked={state.pronouns === "they/them"}
               className="w-100"
+              id="they"
             >
               {state.pronouns === "they/them" ? "she/her" : "they/them"}
             </Clicker>
@@ -65,14 +67,7 @@ export const Chapter0 = () => {
                 Ahh, welcome to this world, my beautiful baby girl. May you not
                 suffer too greatly.
               </div>
-              <Clicker
-                onClick={() =>
-                  handleState((state) => {
-                    state.chapter = 1;
-                    return state;
-                  })
-                }
-              >
+              <Clicker onClick={next} id="born">
                 Become born
               </Clicker>
             </div>

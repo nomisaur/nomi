@@ -17,13 +17,6 @@ declare global {
   }
 }
 
-if (typeof window !== "undefined") {
-  window.clearSave = () => {
-    window.indexedDB.deleteDatabase("localforage");
-    window.location.reload();
-  };
-}
-
 export default function Page() {
   const [loading, setLoading] = useState(true);
   const [state, handleState] = useFancyReducer(initialState);
@@ -38,6 +31,15 @@ export default function Page() {
       }
       setLoading(false);
     });
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.clearSave = () => {
+        window.indexedDB.deleteDatabase("localforage");
+        window.location.reload();
+      };
+    }
   }, []);
 
   useEffect(() => {

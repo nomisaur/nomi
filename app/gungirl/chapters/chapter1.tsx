@@ -1,9 +1,9 @@
-import { useChapter, useGunGirlContext } from "../state";
+import { useChapter, useFlipper, useGunGirlContext } from "../state";
 import { Clicker } from "../components/clicker";
 import { Title } from "../components/title";
 
 export const Chapter1 = () => {
-  const { handleState } = useGunGirlContext();
+  const { next } = useFlipper();
   const {
     chapterState: { sleep, cry },
     setChapterState,
@@ -15,11 +15,19 @@ export const Chapter1 = () => {
     return (
       <div>
         {x < 3 && (
-          <Clicker onClick={() => setCry(cry + 1)} disabled={cry > x || sleep}>
+          <Clicker
+            onClick={() => setCry(cry + 1)}
+            disabled={cry > x || sleep}
+            id={"cry" + x}
+          >
             Cry
           </Clicker>
         )}
-        <Clicker onClick={() => setSleep(true)} disabled={cry > x || sleep}>
+        <Clicker
+          onClick={() => setSleep(true)}
+          disabled={cry > x || sleep}
+          id={"sleep" + x}
+        >
           Sleep
         </Clicker>
       </div>
@@ -75,14 +83,7 @@ export const Chapter1 = () => {
             Despite your cries you were left all alone. Your nervous system
             remembers. You fell asleep.
           </p>
-          <Clicker
-            onClick={() =>
-              handleState((state) => {
-                state.chapter = 2;
-                return state;
-              })
-            }
-          >
+          <Clicker onClick={() => next()} id="grow">
             grow
           </Clicker>
         </>
