@@ -48,7 +48,7 @@ export const Chapter1 = () => {
       </p>
       <p>
         Your parents brought the trauma of your birth home with them in the
-        forested hills of the California Bay Area. You shared a room with your
+        forested hills of the California Bay Area.¹ You shared a room with your
         three-year-old brother. Your mother fell into a depression and your
         father punished her for it.
       </p>
@@ -88,6 +88,12 @@ export const Chapter1 = () => {
           </Clicker>
         </>
       )}
+      <div className="text-xs">
+        1. Despite being a wealthy area, you and your family were poor. You
+        could only afford to live there because your fathers job involved
+        maintainence of a golf course. They provided the housing so that they
+        could call on him at all times.
+      </div>
     </div>
   );
 };
