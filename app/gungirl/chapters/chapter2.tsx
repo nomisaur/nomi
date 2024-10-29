@@ -4,6 +4,7 @@ export const Chapter2 = () => {
   return (
     <div>
       <Title>here we gun again</Title>
+      <p></p>
     </div>
   );
 };

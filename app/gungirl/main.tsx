@@ -16,8 +16,8 @@ export const Main = () => {
             state.chapter === index ? <Chapter key={index} /> : null
           )}
         </div>
-        <Flipper />
       </div>
+      <Flipper />
     </>
   );
 };

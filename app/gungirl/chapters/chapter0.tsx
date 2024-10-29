@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useChapter, useFlipper, useGunGirlContext } from "../state";
+import { useFlipper, useGunGirlContext } from "../state";
 import { Clicker } from "../components/clicker";
 
 export const Chapter0 = () => {
   const { state, handleState } = useGunGirlContext();
   const { next } = useFlipper();
-  const { chapterState, setChapterState } = useChapter();
   const [name, setName] = useState(state.name || "");
   const setPronouns = (choice: string) =>
     handleState((state) => {

@@ -1,4 +1,4 @@
-import { useChapter, useFlipper, useGunGirlContext } from "../state";
+import { useChapter, useFlipper } from "../state";
 import { Clicker } from "../components/clicker";
 import { Title } from "../components/title";
 
