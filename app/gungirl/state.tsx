@@ -36,6 +36,23 @@ export const GunGirlContext = createContext<{
 });
 export const useGunGirlContext = () => useContext(GunGirlContext);
 
+export const useFlipper = () => {
+  const { state, handleState } = useGunGirlContext();
+  const next = () => {
+    handleState((state) => {
+      state.chapter = state.chapter + 1;
+      return state;
+    });
+  };
+  const back = () => {
+    handleState((state) => {
+      state.chapter = state.chapter - 1;
+      return state;
+    });
+  };
+  return { next, back };
+};
+
 export const useChapter = (initialState: AnyObj) => {
   const { state, handleState } = useGunGirlContext();
   const chapterState = state[state.chapter] ?? initialState;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGunGirlContext } from "../state";
-import { Clicker } from "@/components/clicker";
+import { Clicker } from "../components/clicker";
 
 export const Chapter0 = () => {
   const { state, handleState } = useGunGirlContext();
