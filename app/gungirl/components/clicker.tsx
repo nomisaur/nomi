@@ -19,7 +19,6 @@ export const Clicker = ({
   return (
     <button
       onClick={() => {
-        onClick?.();
         handleState((state) => {
           state[state.chapter] = {
             ...state[state.chapter],
@@ -30,6 +29,7 @@ export const Clicker = ({
           };
           return state;
         });
+        onClick?.();
       }}
       className={`${className} ${
         state[state.chapter]?.clickedButtons?.[id]
