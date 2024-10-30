@@ -67,7 +67,7 @@ export const useChapter = (initialState: AnyObj = {}) => {
   const setChapterState = (key: any, value: any) => {
     handleState((state) => {
       state[state.chapter] = {
-        ...chapterState,
+        ...state[state.chapter],
         [key]: value,
       };
       return state;
@@ -78,8 +78,10 @@ export const useChapter = (initialState: AnyObj = {}) => {
 
 export const useFancyReducer = (initialState: State): [State, HandleState] => {
   const [state, handleState] = useReducer(
-    (state: State, [handler, payload]: [Handler, any]) =>
-      handler(clone(state), payload),
+    (state: State, [handler, payload]: [Handler, any]) => {
+      const result = handler(clone(state), payload);
+      return result;
+    },
     initialState
   );
   return [
