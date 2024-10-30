@@ -9,8 +9,8 @@ const chapters = Object.entries(chaptersObj)
 export const Main = () => {
   const { state } = useGunGirlContext();
   return (
-    <>
-      <div className="justify-center p-4">
+    <div>
+      <div className="flex p-4 justify-center">
         <div className="max-w-prose w-full">
           {chapters.map((Chapter, index) =>
             state.chapter === index ? <Chapter key={index} /> : null
@@ -18,6 +18,6 @@ export const Main = () => {
         </div>
       </div>
       <Flipper />
-    </>
+    </div>
   );
 };

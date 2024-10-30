@@ -7,9 +7,9 @@ export const Flipper = () => {
   const { next, back } = useFlipper();
 
   return (
-    <>
+    <div className="">
       <div className="h-10"></div>
-      <div className="max-w-prose fixed bottom-0 w-full flex text-center bg-opacity-95 bg-black h-10">
+      <div className="max-w-prose fixed bottom-0 w-full flex text-center bg-opacity-95 bg-black h-10 left-1/2 -translate-x-1/2">
         <div
           className="w-full bg-slate-900 ml-1 mr-1 mb-1 pt-2"
           onClick={() => state.chapter > 0 && back()}
@@ -24,6 +24,6 @@ export const Flipper = () => {
           {">"}
         </div>
       </div>
-    </>
+    </div>
   );
 };
