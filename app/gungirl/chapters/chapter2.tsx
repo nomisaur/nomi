@@ -53,6 +53,12 @@ export const Chapter2 = () => {
           </p>
           <Clicker id="fuck">fuck</Clicker>
         </>
+      )}{" "}
+      {chapterState.clickedButtons.fuck && (
+        <>
+          <p></p>
+          <Clicker id="fuck">fuck</Clicker>
+        </>
       )}
     </div>
   );
