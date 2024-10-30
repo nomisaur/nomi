@@ -13,14 +13,18 @@ export type State = {
   name?: string;
   pronouns?: string;
   chapter: number;
-  clickedButtons: { [key: string]: boolean };
-  [key: number]: AnyObj;
+  [key: number]: {
+    clickedButtons: { [key: string]: boolean };
+    [key: string]: any;
+    [key: number]: any;
+    [key: symbol]: any;
+  };
 };
 
 export type Handler = (state: State, payload: any) => State;
 export type HandleState = (handler: Handler, payload?: any) => void;
 
-export const initialState: State = { chapter: 0, clickedButtons: {} };
+export const initialState: State = { chapter: 0 };
 
 export const log = (...args: any[]) => {
   if (true) {
@@ -56,7 +60,10 @@ export const useFlipper = () => {
 
 export const useChapter = (initialState: AnyObj = {}) => {
   const { state, handleState } = useGunGirlContext();
-  const chapterState = state[state.chapter] ?? initialState;
+  const chapterState = state[state.chapter] ?? {
+    ...initialState,
+    clickedButtons: {},
+  };
   const setChapterState = (key: any, value: any) => {
     handleState((state) => {
       state[state.chapter] = {

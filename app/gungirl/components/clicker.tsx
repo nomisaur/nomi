@@ -15,22 +15,26 @@ export const Clicker = ({
   [x: string]: any;
 }) => {
   const { state, handleState } = useGunGirlContext();
-  const key = `${state.chapter}-${id}`;
 
   return (
     <button
       onClick={() => {
         handleState((state) => {
-          state.clickedButtons = {
-            ...state.clickedButtons,
-            [key]: true,
+          state[state.chapter] = {
+            ...state[state.chapter],
+            clickedButtons: {
+              ...(state[state.chapter]?.clickedButtons ?? {}),
+              [id]: true,
+            },
           };
           return state;
         });
         onClick?.();
       }}
       className={`${className} ${
-        state.clickedButtons[key] ? "border-white" : "border-transparent"
+        state[state.chapter]?.clickedButtons?.[id]
+          ? "border-white"
+          : "border-transparent"
       }`}
       {...rest}
     >

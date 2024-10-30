@@ -3,7 +3,7 @@ import { Title } from "../components/title";
 import { useChapter } from "../state";
 
 export const Chapter2 = () => {
-  const { chapterState, setChapterState } = useChapter();
+  const { chapterState } = useChapter();
   return (
     <div>
       <Title>Here We Gun Again</Title>
@@ -35,10 +35,8 @@ export const Chapter2 = () => {
         overbite-teeth. The other children called you "Ratatouille" and laughed
         at you.
       </p>
-      <Clicker id="ok" onClick={() => setChapterState("ok", true)}>
-        ok
-      </Clicker>
-      {chapterState.ok && (
+      <Clicker id="ok">ok</Clicker>
+      {chapterState.clickedButtons.ok && (
         <>
           <p>
             And you held your arms up and hunched like a rat too. You cried
@@ -53,6 +51,7 @@ export const Chapter2 = () => {
             agreed. You often thought of killing yourself even though you were
             only seven-years-old. Many have said that you probably should have.
           </p>
+          <Clicker id="fuck">fuck</Clicker>
         </>
       )}
     </div>
