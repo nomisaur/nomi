@@ -91,8 +91,8 @@ export const Chapter1 = () => {
       <div className="text-xs">
         1. Despite being a wealthy area, you and your family were poor. You
         could only afford to live there because your fathers job involved
-        maintainence of a golf course. They provided the housing so that they
-        could call on him at all times.
+        maintainence of a nearby mineral quarry. They provided the housing so
+        that they could call on him at all times.
       </div>
     </div>
   );

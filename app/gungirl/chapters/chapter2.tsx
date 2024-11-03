@@ -1,9 +1,10 @@
 import { Clicker } from "../components/clicker";
 import { Title } from "../components/title";
-import { useChapter } from "../state";
+import { useChapter, useFlipper } from "../state";
 
 export const Chapter2 = () => {
   const { chapterState } = useChapter();
+  const { next } = useFlipper();
   return (
     <div>
       <Title>Here We Gun Again</Title>
@@ -35,7 +36,9 @@ export const Chapter2 = () => {
         overbite-teeth. The other children called you "Ratatouille" and laughed
         at you.
       </p>
-      <Clicker id="ok">ok</Clicker>
+      <Clicker id="ok" disabled={chapterState.clickedButtons.ok}>
+        ok
+      </Clicker>
       {chapterState.clickedButtons.ok && (
         <>
           <p>
@@ -51,13 +54,17 @@ export const Chapter2 = () => {
             agreed. You often thought of killing yourself even though you were
             only seven-years-old. Many have said that you probably should have.
           </p>
-          <Clicker id="fuck">fuck</Clicker>
-        </>
-      )}{" "}
-      {chapterState.clickedButtons.fuck && (
-        <>
-          <p></p>
-          <Clicker id="fuck">fuck</Clicker>
+          <p>
+            You wouldn't have known how to kill yourself even if you were brave
+            enough to do so. You were cowardly and afraid of death, and pretty
+            much useless at everything you did. You could only suffer and eat
+            your stupid cereal, processed little pellets like human dog food.
+            You had about as much agency as a dog, except you had to say "yes"
+            and "no" and sit in a little desk for 6 hours a day.
+          </p>
+          <Clicker id="fuck" onClick={() => next()}>
+            fuck
+          </Clicker>
         </>
       )}
     </div>
