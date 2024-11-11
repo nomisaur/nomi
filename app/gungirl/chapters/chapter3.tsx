@@ -19,16 +19,17 @@ export const Chapter3 = () => {
       </p>
       <p>
         You were not alowed past the treeline, and yet there you stood carefully
-        considering whether or not to become a rule-breaker. This might be the
-        first rule that you would be consciously breaking. You looked back
-        towards your home. The more you stared at it the more it narrowed in on
-        you like it wanted to swallow you. A shiver ran down your spine and you
-        turned away.
+        considering whether or not to venture forth and become a rule-breaker.
+        This might be the first rule that you would be consciously breaking. You
+        looked back towards your home. The more you stared at it the more it
+        narrowed in on you like it wanted to swallow you. A shiver ran down your
+        spine and you turned away.
       </p>
       <p>
         You looked now towards the tall green trees that covered the hills that
         rolled up like great waves and met the clouds. If only you could be one
-        of those cloud floating above the landscape, free of burdens.
+        of those clouds floating above everything, unbothered by the troubles
+        below. The trees called to you and you wanted to go to them.
       </p>
       <div>
         <Clicker id={"go1"} disabled={firstChoice}>
@@ -40,7 +41,7 @@ export const Chapter3 = () => {
       </div>
       {chapterState.clickedButtons.home && (
         <>
-          <p>Boring!</p>
+          <p>no.</p>
           <Clicker id={"go2"} disabled={chapterState.clickedButtons.go2}>
             break the rules
           </Clicker>
@@ -49,10 +50,19 @@ export const Chapter3 = () => {
       {(chapterState.clickedButtons.go1 || chapterState.clickedButtons.go2) && (
         <>
           <p>
-            A deep wind blew from the trees and blew your hair behind you. You
-            closed your eyes and breathed it in. You heard the soft russle of
-            leaves and the light played upon your face.
+            A wind blew from the deepening trees. The light speckled through the
+            swaying leaves and glittered on the soft earth. You took a deep
+            breath and set out on the trail ahead.
           </p>
+          <p>
+            You walked a while on a narrow trail between trees and bushes. You
+            stepped over large rocks and fallen branches. The trail ended onto a
+            wider path that ran South to North. You followed it North for a
+            while, but it started to veer East, back towards your home. You
+            found another narrow trail that broke off from the path to continue
+            West.
+          </p>
+          <p>The trail met a small creek and ran along side it. </p>
         </>
       )}
     </div>
