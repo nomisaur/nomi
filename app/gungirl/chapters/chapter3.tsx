@@ -1,9 +1,10 @@
 import { Title } from "../components/title";
 import { Clicker } from "../components/clicker";
-import { useChapter } from "../state";
+import { useChapter, useFlipper } from "../state";
 
 export const Chapter3 = () => {
   const { chapterState } = useChapter();
+  const { next } = useFlipper();
   const firstChoice =
     chapterState.clickedButtons.go1 || chapterState.clickedButtons.home;
   return (
@@ -108,6 +109,9 @@ export const Chapter3 = () => {
             you. You put your hand on the doorknob and hesitated to open it. You
             were afraid.
           </p>
+          <Clicker id="next" onClick={() => next()}>
+            next
+          </Clicker>
         </>
       )}
     </div>
