@@ -7,7 +7,7 @@ export const Chapter2 = () => {
   const { next } = useFlipper();
   return (
     <div>
-      <Title>Here We Gun Again</Title>
+      <Title>A Bit of Context</Title>
       <p>
         You grew in a house of resentment. Your father resented your mother
         because she was no longer the woman he fell in love with. She was sad
