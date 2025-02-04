@@ -8,26 +8,37 @@ export const Chapter4 = () => {
     chapterState.clickedButtons.go1 || chapterState.clickedButtons.home;
   return (
     <div>
-      <Title>You Can Look Away For This</Title>
+      <Title>Lessons from Mom</Title>
       <p>
-        "Where the fuck have you been! I've been worried sick about you. Don't
-        you ever put me through that again!" yelled Mom.
+        Do you remember how you were beaten? Do you remember the terror of being
+        so small and under threat of someone so big and erratic? I don't need to
+        tell you this. You know this. You know what it's like to be powerless.
+        That pain is still in your heart if you look for it.
       </p>
       <p>
-        She grabbed you by the arm and pulled you roughly to her. She beat you
-        with a vaccuum wire. You don't remember all of it. You fell asleep
-        crying that night.
-      </p>
-      <br></br>
-      <p>
-        A year passed. You didn't venture out into the woods again. You didn't
-        look outside yourself to escape anymore. Instead you shut down and went
-        inwards. The world was not made for you.
+        That night that you came home late you were beaten. Your mom was so
+        worried about you and she showed you her love through her violence. She
+        did it for you, she told herself. She did it all for you.
       </p>
       <p>
-        You were an angry child. At night you bit yourself as hard as you could
-        stand. You hid the marks under your sleeves.
+        She taught you how to build walls around your heart, the same walls that
+        kept her safe. It was one of the few things that she knew how to teach
+        you because it was taught to her. The craft had been passed down in your
+        family for generations.
       </p>
+      <p>
+        To be open, to explore the world around you with curiosity, these things
+        were dangerous. Some deep ancestral wound spoke fear into your body. You
+        didn't soon go back into the woods. You learned not to grow outwards.
+        Instead you could only go inwards like some stunted tree twisting in on
+        itself.
+      </p>
+      <p>
+        You spent most of your time inside your own mind, disconnected from your
+        body. And having only your wounds for company, you grew familiar with
+        hatred, a shadow that you wrapped around yourself like a blanket.
+      </p>
+      <p>A year passed before you went out into the woods again.</p>
     </div>
   );
 };
