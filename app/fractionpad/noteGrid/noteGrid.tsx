@@ -37,9 +37,10 @@ export const NoteGrid = () => {
             value={root}
             min="1"
             max="2000"
-            step="1"
+            step="0.01"
             onChange={(e) => {
-              const num = parseInt(e.target.value);
+              console.log(e.target.value);
+              const num = parseFloat(e.target.value);
               setRoot(Number.isNaN(num) ? "" : num);
             }}
           />
@@ -47,10 +48,10 @@ export const NoteGrid = () => {
             type="range"
             value={root}
             min="1"
-            max="800"
-            step="1"
+            max="2000"
+            step="0.01"
             onChange={(e) => {
-              const num = parseInt(e.target.value);
+              const num = parseFloat(e.target.value);
               setRoot(Number.isNaN(num) ? "" : num);
             }}
           />
