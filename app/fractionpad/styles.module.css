@@ -1,0 +1,97 @@
+.frac {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  letter-spacing: 0.001em;
+  text-align: center;
+}
+
+.top {
+  display: block;
+  padding: 0.1em;
+}
+.bottom {
+  display: block;
+  padding: 0.1em;
+  border-top: thin solid white;
+}
+.symbol {
+  display: block;
+  padding: 0.1em;
+  display: none;
+}
+
+.noteBoxContainer {
+  width: 80px;
+  height: 80px;
+  margin: 2px;
+  position: relative;
+}
+
+.keybox {
+  width: 80px;
+  height: 80px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.noteFraction {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+}
+.noteFreq {
+  margin-right: 4px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.volumeBox {
+  position: absolute;
+  height: 80px;
+  width: 10px;
+  z-index: 1;
+}
+
+.volume {
+  -webkit-appearance: none;
+  transform-origin: bottom left;
+  transform: translate(10px, 66px) rotate(270deg);
+  height: 10px;
+  width: 80px;
+  margin: 0;
+  padding: 0;
+}
+
+.volume ::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 10px;
+  width: 80px;
+}
+
+.volume ::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 10px;
+  width: 10px;
+  background: #fff;
+}
+
+.row {
+  display: flex;
+}
+
+.gridOptions {
+  display: flex;
+  margin: 5px;
+  justify-content: space-between;
+  width: 800px;
+}
+
+.slider {
+  margin: 5px;
+}

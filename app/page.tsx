@@ -7,6 +7,7 @@ export default function Home() {
       <Link href="/gungirl">
         Click here to read Gun Girl, a silly little book I'm writing
       </Link>
+      <Link href="/fractionpad">Click here to play with music</Link>
     </>
   );
 }
