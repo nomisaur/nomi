@@ -24,7 +24,6 @@ export default function Page() {
   }, []);
 
   const loaded = Boolean(audioCtx && masterGain && analyser);
-  console.log({ loaded });
 
   return (
     loaded && (

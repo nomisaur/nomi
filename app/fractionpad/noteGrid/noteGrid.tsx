@@ -16,15 +16,15 @@ import styles from "../styles.module.css";
 export const NoteGrid = () => {
   const { audioCtx, masterGain } = useMusicContext();
 
-  const [root, setRoot] = useState(rootFrequency);
-  const [gridSize, setGridSize] = useState(noteGridSize);
+  const [root, setRoot] = useState<number | "">(rootFrequency);
+  const [gridSize, setGridSize] = useState<number | "">(noteGridSize);
   const [toggleMode, setToggleMode] = useState(initialToggleMode);
   const [longRelease, setLongRelease] = useState(initialLongRelease);
   const [lowerMode, setLowerMode] = useState(initialLowerMode);
   const [notesPlaying, setNotesPlaying] = useState({});
 
   const realGridSize = Math.min(gridSize || 1, 32);
-  const ratios = list(realGridSize, (a) =>
+  const ratios: Array<Array<[number, number]>> = list(realGridSize, (a) =>
     list(realGridSize, (b) => [b + 1, a + 1])
   );
   return (
@@ -96,7 +96,10 @@ export const NoteGrid = () => {
       {ratios.map((row, i1) => (
         <div key={i1} className={styles.row}>
           {row.map(([top, bottom], i2) => {
-            const ratio = [lowerMode ? top : top + bottom - 1, bottom];
+            const ratio: [number, number] = [
+              lowerMode ? top : top + bottom - 1,
+              bottom,
+            ];
             const reducedRatio = reduceFraction(ratio);
             const noteId = `${ratio[0]},${ratio[1]}`;
             const ratioId = `${reducedRatio[0]},${reducedRatio[1]}`;
@@ -107,8 +110,6 @@ export const NoteGrid = () => {
                 reducedRatio={reducedRatio}
                 noteId={noteId}
                 ratioId={ratioId}
-                audioCtx={audioCtx}
-                masterGain={masterGain}
                 root={root || 1}
                 gridSize={realGridSize}
                 toggleMode={toggleMode}

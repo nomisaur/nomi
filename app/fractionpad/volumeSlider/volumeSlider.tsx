@@ -8,9 +8,9 @@ export const VolumeSlider = () => {
   const [volume, setVolume] = useState(initialVolume);
 
   useEffect(() => {
-    masterGain.gain.linearRampToValueAtTime(
+    masterGain?.gain.linearRampToValueAtTime(
       volume,
-      audioCtx.currentTime + 0.05
+      (audioCtx?.currentTime ?? Date.now()) + 0.05
     );
   }, [volume]);
 

@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-
 import { Fraction } from "../frations";
-
 import { displayNumber } from "../utils";
-
 import { PlayNote } from "../playNote";
 import styles from "../styles.module.css";
 
@@ -20,7 +17,7 @@ export const NoteBox = ({
   playing,
   root,
   ratio: [top, bottom] = [],
-  color: [red, green, blue] = [],
+  color: [red, green, blue],
   onMouseDown,
   onMouseUp,
   ...props
@@ -35,8 +32,6 @@ export const NoteBox = ({
     green,
     Math.max(0, blue - 32)
   );
-
-  console.log({ playing });
 
   return (
     <div className={styles.noteBoxContainer}>
@@ -62,12 +57,7 @@ export const NoteBox = ({
         <div className={styles.noteFraction}>
           <Fraction top={top} bottom={bottom} />
         </div>
-        <div
-          className={styles.noteFreq}
-          // style={{ background: keyColor }}
-        >
-          {displayNumber(frequency)}
-        </div>
+        <div className={styles.noteFreq}>{displayNumber(frequency)}</div>
 
         <PlayNote
           playing={playing}

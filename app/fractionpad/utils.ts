@@ -5,8 +5,8 @@ export const list = (num, arg = (a) => a) => {
   return [...Array(num)].map((_, i) => func(i));
 };
 
-export const gcd = (a, b) => (b ? gcd(b, a % b) : a);
-export const reduceFraction = ([a, b]) => {
+export const gcd = (a: number, b: number) => (b ? gcd(b, a % b) : a);
+export const reduceFraction = ([a, b]: [number, number]): [number, number] => {
   const reducer = gcd(a, b);
   return [a / reducer, b / reducer];
 };

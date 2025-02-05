@@ -7,7 +7,9 @@ export const Visualizer = () => {
   const { analyser, audioCtx } = useMusicContext();
   const { width } = useWindowDimensions();
   const [weirdMode, setWeirdMode] = useState(initialWeirdMode);
-  const [speed, setSpeed] = useState(initialSpeed);
+  const [speed, setSpeed] = useState<number>(initialSpeed);
+
+  if (!analyser) return null;
 
   analyser.fftSize = 2048;
   const bufferLength = analyser.frequencyBinCount;
@@ -24,7 +26,7 @@ export const Visualizer = () => {
     tempCanvas.width = width;
     tempCanvas.height = height;
 
-    const timePerBuffer = (bufferLength / audioCtx.sampleRate) * 1000;
+    const timePerBuffer = (bufferLength / (audioCtx?.sampleRate ?? 1)) * 1000;
     const speedMinusOne = speed - 1;
     const timeMultiplier = bufferLength / timePerBuffer / speed;
     const yMultiplier = height / 256;
@@ -36,8 +38,8 @@ export const Visualizer = () => {
     return (timeSinceLastFrame) => {
       const bufferJumpSpacing = timeSinceLastFrame * timeMultiplier;
 
-      tempCtx.clearRect(0, 0, width, height);
-      tempCtx.drawImage(canvas, 0, 0, width, height);
+      tempCtx?.clearRect(0, 0, width, height);
+      tempCtx?.drawImage(canvas, 0, 0, width, height);
 
       canvasCtx.clearRect(0, 0, width, height);
       canvasCtx.drawImage(tempCanvas, speed, 0, width, height);
@@ -63,8 +65,13 @@ export const Visualizer = () => {
     canvasCtx.fillStyle = "#000";
     canvasCtx.strokeStyle = "#fff";
     canvasCtx.lineWidth = 1;
+    let frameTimer = 0;
     return (timeSinceLastFrame) => {
-      console.log(timeSinceLastFrame);
+      if (timeSinceLastFrame + frameTimer < speed) {
+        frameTimer = frameTimer + Math.max(timeSinceLastFrame, 0);
+        return;
+      }
+      frameTimer = 0;
       analyser.getByteTimeDomainData(dataArray);
       canvasCtx.clearRect(0, 0, width, height);
       canvasCtx.beginPath();
@@ -81,25 +88,25 @@ export const Visualizer = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         weird mode:
         <input
           type="checkbox"
           checked={weirdMode}
           onChange={(e) => setWeirdMode(e.target.checked)}
         />
-      </div>
+      </div> */}
       <div>
         speed:
         <input
           type="range"
           value={speed}
           min="1"
-          max="500"
+          max="2000"
           step="1"
           onChange={(e) => {
             const num = parseInt(e.target.value);
-            setSpeed(Number.isNaN(num) ? "" : num);
+            setSpeed(Number.isNaN(num) ? 1 : num);
           }}
         />
       </div>
