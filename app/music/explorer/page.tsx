@@ -1,37 +1,30 @@
 "use client";
-// window.AudioContext = window.AudioContext || window.webkitAudioContext;
 import React, { useState, useEffect } from "react";
 import { MusicContext } from "./hooks";
-
-import { NoteGrid } from "./noteGrid";
-import { VolumeSlider } from "./volumeSlider";
-import { Visualizer } from "./visualizer";
 
 export default function Page() {
   const [audioCtx, setAudioCtx] = useState<AudioContext | undefined>();
   const [masterGain, setMasterGain] = useState<GainNode | undefined>();
-  const [analyser, setAnalyser] = useState<AnalyserNode | undefined>();
+  const [analyzer, setAnalyzer] = useState<AnalyserNode | undefined>();
 
   useEffect(() => {
     const audioCtx = new AudioContext();
     const masterGain = audioCtx.createGain();
-    const analyser = audioCtx.createAnalyser();
+    const analyzer = audioCtx.createAnalyser();
     setAudioCtx(audioCtx);
     setMasterGain(masterGain);
-    setAnalyser(analyser);
-    masterGain.connect(analyser);
-    analyser.connect(audioCtx.destination);
+    setAnalyzer(analyzer);
+    masterGain.connect(analyzer);
+    analyzer.connect(audioCtx.destination);
   }, []);
 
-  const loaded = Boolean(audioCtx && masterGain && analyser);
+  if (!audioCtx || !masterGain || !analyzer) return null;
 
   return (
-    loaded && (
-      <MusicContext.Provider value={{ audioCtx, masterGain, analyser }}>
-        <Visualizer />
-        <VolumeSlider />
-        <NoteGrid />
-      </MusicContext.Provider>
-    )
+    <MusicContext.Provider value={{ audioCtx, masterGain, analyzer }}>
+      {/* <Visualizer /> */}
+      {/* <VolumeSlider /> */}
+      <NoteGrid />
+    </MusicContext.Provider>
   );
 }
