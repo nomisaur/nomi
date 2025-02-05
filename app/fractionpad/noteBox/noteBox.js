@@ -36,6 +36,8 @@ export const NoteBox = ({
     Math.max(0, blue - 32)
   );
 
+  console.log({ playing });
+
   return (
     <div className={styles.noteBoxContainer}>
       <div className={styles.volumeBox}>
@@ -60,7 +62,12 @@ export const NoteBox = ({
         <div className={styles.noteFraction}>
           <Fraction top={top} bottom={bottom} />
         </div>
-        <div className={styles.noteFreq}>{displayNumber(frequency)}</div>
+        <div
+          className={styles.noteFreq}
+          // style={{ background: keyColor }}
+        >
+          {displayNumber(frequency)}
+        </div>
 
         <PlayNote
           playing={playing}

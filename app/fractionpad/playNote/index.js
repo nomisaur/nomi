@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDidMountEffect, useMusicContext } from "../hooks";
 
 export const PlayNote = ({
@@ -25,20 +25,20 @@ export const PlayNote = ({
   const peakVolume = peak || 0.00000001;
   const noteVolume = volume || 0.00000001;
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     const stop = () => {
       const osc = oscRef.current;
       const envGain = envGainRef.current;
 
-      envGain.gain.setValueAtTime(
+      envGain.gain?.setValueAtTime(
         sustainVolume,
         audioCtx.currentTime + decayTime
       );
-      envGain.gain.exponentialRampToValueAtTime(
+      envGain.gain?.exponentialRampToValueAtTime(
         0.00000001,
         audioCtx.currentTime + stopTime
       );
-      osc.stop(audioCtx.currentTime + stopTime);
+      osc.stop?.(audioCtx.currentTime + stopTime);
     };
 
     if (playing) {
@@ -73,7 +73,7 @@ export const PlayNote = ({
     return () => playing && stop();
   }, [playing]);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     const osc = oscRef.current;
     if (osc.frequency) {
       osc.frequency.linearRampToValueAtTime(
@@ -83,7 +83,7 @@ export const PlayNote = ({
     }
   }, [frequency]);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     const noteGain = noteGainRef.current;
     if (noteGain.gain) {
       noteGain.gain.linearRampToValueAtTime(

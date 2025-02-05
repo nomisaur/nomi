@@ -40,6 +40,7 @@ export const useCountEffect = (func, deps = []) => {
 export const useDidMountEffect = (func, deps = []) => {
   useCountEffect((count) => {
     if (count > 0) {
+      console.log("hello", count);
       return func();
     }
   }, deps);
