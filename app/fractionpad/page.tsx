@@ -8,9 +8,9 @@ import { VolumeSlider } from "./volumeSlider";
 import { Visualizer } from "./visualizer";
 
 export default function Page() {
-  const [audioCtx, setAudioCtx] = useState();
-  const [masterGain, setMasterGain] = useState();
-  const [analyser, setAnalyser] = useState();
+  const [audioCtx, setAudioCtx] = useState<AudioContext | undefined>();
+  const [masterGain, setMasterGain] = useState<GainNode | undefined>();
+  const [analyser, setAnalyser] = useState<AnalyserNode | undefined>();
 
   useEffect(() => {
     const audioCtx = new AudioContext();
