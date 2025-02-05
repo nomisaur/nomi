@@ -49,9 +49,9 @@ export const PlayNote = ({
       const envGain = envGainRef.current;
       const noteGain = noteGainRef.current;
 
-      envGain && osc?.connect(envGain);
-      noteGain && envGain?.connect(noteGain);
-      masterGain && noteGain?.connect(masterGain);
+      if (envGain) osc?.connect(envGain);
+      if (noteGain) envGain?.connect(noteGain);
+      if (masterGain) noteGain?.connect(masterGain);
 
       const currentTime = audioCtx?.currentTime ?? Date.now();
 
