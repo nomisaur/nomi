@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { MusicContext } from "./hooks";
+import { Piano } from "./piano";
+import { VolumeSlider } from "./volumeSlider";
 
 export default function Page() {
   const [audioCtx, setAudioCtx] = useState<AudioContext | undefined>();
@@ -23,8 +25,8 @@ export default function Page() {
   return (
     <MusicContext.Provider value={{ audioCtx, masterGain, analyzer }}>
       {/* <Visualizer /> */}
-      {/* <VolumeSlider /> */}
-      <NoteGrid />
+      <VolumeSlider />
+      <Piano />
     </MusicContext.Provider>
   );
 }
