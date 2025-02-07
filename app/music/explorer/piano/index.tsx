@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PlayNote } from "../playNote";
 
-const TET_CONSTANT = Math.pow(2, 1 / 12);
-const MIDDLE_C = 440 * Math.pow(1 / TET_CONSTANT, 9);
-
-const NOTES = [
+const TET_NOTES = [
   "c",
   "c#",
   "d",
@@ -19,64 +16,95 @@ const NOTES = [
   "b",
   "2c",
 ] as const;
-type Note = (typeof NOTES)[number];
+
+const FRACTION_ROWS = 5;
+
+type Fraction = [number, number];
+const FRACTIONS = Array(FRACTION_ROWS)
+  .fill(null)
+  .map((_, i1) => {
+    const bottom = i1 + 1;
+    return Array(bottom + 1)
+      .fill(null)
+      .map((_, i2) => {
+        const top = bottom + i2;
+        return [top, bottom] as Fraction;
+      });
+  });
+
+type Note = string;
 
 interface NoteData {
-  note: Note;
-  color: "black" | "white";
-  freq: number;
+  note?: Note;
+  freq?: number;
+  color?: string;
 }
 
-const layout = {
-  KeyS: "c",
-  KeyD: "d",
-  KeyF: "e",
-  KeyG: "f",
-  KeyH: "g",
-  KeyJ: "a",
-  KeyK: "b",
-  KeyE: "c#",
-  KeyR: "d#",
-  KeyY: "f#",
-  KeyU: "g#",
-  KeyI: "a#",
-  KeyL: "2c",
+const TET_CONSTANT = Math.pow(2, 1 / 12);
+const MIDDLE_C = 440 * Math.pow(1 / TET_CONSTANT, 9);
+
+const LAYOUT = {
+  KeyZ: "c",
+  KeyX: "d",
+  KeyC: "e",
+  KeyV: "f",
+  KeyB: "g",
+  KeyN: "a",
+  KeyM: "b",
+  Comma: "2c",
+  KeyS: "c#",
+  KeyD: "d#",
+  KeyG: "f#",
+  KeyH: "g#",
+  KeyJ: "a#",
 };
 
-const getNotes = (root) =>
-  NOTES.reduce((acc: NoteData[], note: Note) => {
+const getTetNotes = (root) =>
+  TET_NOTES.reduce((acc: NoteData[], note: Note) => {
     const lastNote = acc.at(-1);
     return [
       ...acc,
       {
         note,
         color: (note.includes("#") ? "black" : "white") as "black" | "white",
-        freq: lastNote ? lastNote.freq * TET_CONSTANT : root,
-        code: layout[note],
+        freq: lastNote?.freq ? lastNote.freq * TET_CONSTANT : root,
       },
     ];
   }, []);
+
+const getFractionNotes = (root) =>
+  FRACTIONS.map((row) =>
+    row.reduce(
+      (acc: NoteData[], [top, bottom]: Fraction) => [
+        ...acc,
+        { note: `${top}/${bottom}`, freq: (root * top) / bottom },
+      ],
+      []
+    )
+  );
 
 export const Piano = ({ active = true }) => {
   const [playingNotes, setPlayingNotes] = useState({});
   const setPlaying = (note, playing) => {
     setPlayingNotes({ ...playingNotes, [note]: playing });
   };
-  const [middleC, setMiddleC] = useState(MIDDLE_C);
-  const [notes, setNotes] = useState(getNotes(middleC));
+  const [root, setRoot] = useState(MIDDLE_C);
+  const [tetNotes, setTetNotes] = useState(getTetNotes(root));
+  const [fractionNotes, setFractionNotes] = useState(getFractionNotes(root));
 
   useEffect(() => {
-    setNotes(getNotes(middleC));
-  }, [middleC]);
+    setTetNotes(getTetNotes(root));
+    setFractionNotes(getFractionNotes(root));
+  }, [root]);
 
   useEffect(() => {
     if (!active) return;
     const handleKeyDown = (event) => {
-      const note = layout[event.code];
+      const note = LAYOUT[event.code];
       setPlaying(note, true);
     };
     const handleKeyUp = (event) => {
-      const note = layout[event.code];
+      const note = LAYOUT[event.code];
       setPlaying(note, false);
     };
 
@@ -89,27 +117,74 @@ export const Piano = ({ active = true }) => {
     };
   }, [active, playingNotes, setPlayingNotes]);
 
+  const whiteKeys = tetNotes.filter(({ color }) => color == "white");
+  const blackKeys = [...tetNotes.filter(({ color }) => color == "black")]
+    .toSpliced(2, 0, {})
+    .toSpliced(6, 0, {});
+
   return (
     <div>
       <div>
         root:
         <input
           type="number"
-          value={middleC}
+          value={root}
           onChange={(e) => {
             const value = parseFloat(e.target.value);
-            if (!Number.isNaN(value)) setMiddleC(value);
+            if (!Number.isNaN(value)) setRoot(value);
           }}
         />
       </div>
-      {notes.map(({ note, color, freq }) => {
-        return (
-          <div key={note}>
+      {fractionNotes.map((row, index) => (
+        <div key={index} className="w-full flex justify-between m-1">
+          {row.map(({ note, freq }) => {
+            if (!note || !freq) return null;
+            const playing = Boolean(playingNotes[note]);
+            return (
+              <div
+                key={note}
+                className={`bg-blue-500 size-16 border-2 border-solid ${
+                  playing ? "border-gray-100" : "border-gray-800"
+                }`}
+                onMouseDown={() => setPlaying(note, !playing)}
+                onMouseUp={() => setPlaying(note, false)}
+              >
+                <div>{note}</div>
+                <div>{freq.toFixed(2)}</div>
+                <PlayNote
+                  playing={playing}
+                  waves={[
+                    { freq, volume: 0.5 },
+                    { freq: freq * 2, volume: 0.25 },
+                    { freq: freq * 4, volume: 0.2 },
+                    { freq: freq * 8, volume: 0.15 },
+                    { freq: freq * 16, volume: 0.1 },
+                  ]}
+                />
+              </div>
+            );
+          })}
+        </div>
+      ))}
+      <div className="w-full flex justify-between m-1">
+        {tetNotes.map(({ note, freq, color }) => {
+          if (!note || !freq) return null;
+          const playing = Boolean(playingNotes[note]);
+          return (
             <div
+              key={note}
+              className={`border-2 border-solid ${
+                playing ? "border-gray-100" : "border-gray-800"
+              } ${
+                color == "white"
+                  ? "bg-gray-400 h-32 w-16"
+                  : "size-16 bg-gray-900"
+              }`}
               onMouseDown={() => setPlaying(note, !playingNotes[note])}
               onMouseUp={() => setPlaying(note, false)}
             >
-              {note}
+              <div>{note}</div>
+              <div>{freq.toFixed(2)}</div>
               <PlayNote
                 playing={Boolean(playingNotes[note])}
                 waves={[
@@ -121,9 +196,9 @@ export const Piano = ({ active = true }) => {
                 ]}
               />
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
