@@ -57,7 +57,7 @@ const getNotes = (root) =>
     ];
   }, []);
 
-export const Piano = () => {
+export const Piano = ({ active }) => {
   const [playingNotes, setPlayingNotes] = useState({});
   const setPlaying = (note, playing) => {
     setPlayingNotes({ ...playingNotes, [note]: playing });
@@ -70,6 +70,7 @@ export const Piano = () => {
   }, [middleC]);
 
   useEffect(() => {
+    if (!active) return;
     const handleKeyDown = (event) => {
       const note = layout[event.code];
       setPlaying(note, true);
@@ -86,7 +87,7 @@ export const Piano = () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [playingNotes, setPlayingNotes]);
+  }, [active, playingNotes, setPlayingNotes]);
 
   return (
     <div>
@@ -107,7 +108,6 @@ export const Piano = () => {
             <div
               onMouseDown={() => setPlaying(note, !playingNotes[note])}
               onMouseUp={() => setPlaying(note, false)}
-              onKeyDown={(e) => console.log()}
             >
               {note}
               <PlayNote
