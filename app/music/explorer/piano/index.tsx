@@ -17,7 +17,7 @@ const TET_NOTES = [
   "2c",
 ] as const;
 
-const FRACTION_ROWS = 5;
+const FRACTION_ROWS = 16;
 
 type Fraction = [number, number];
 const FRACTIONS = Array(FRACTION_ROWS)
@@ -57,6 +57,19 @@ const LAYOUT = {
   KeyG: "f#",
   KeyH: "g#",
   KeyJ: "a#",
+  KeyQ: "12/12",
+  KeyW: "13/12",
+  KeyE: "14/12",
+  KeyR: "15/12",
+  KeyT: "16/12",
+  KeyY: "17/12",
+  KeyU: "18/12",
+  KeyI: "19/12",
+  KeyO: "20/12",
+  KeyP: "21/12",
+  BracketLeft: "22/12",
+  BracketRight: "23/12",
+  Backslash: "24/12",
 };
 
 const getTetNotes = (root) =>
@@ -82,6 +95,13 @@ const getFractionNotes = (root) =>
       []
     )
   );
+
+const displayNumber = (num) => {
+  const string = num.toFixed(2);
+  const [whole, decimal] = string.split(".");
+  const dec = parseInt(decimal);
+  return dec === 0 ? whole : `${whole}.${dec}`;
+};
 
 export const Piano = ({ active = true }) => {
   const [playingNotes, setPlayingNotes] = useState({});
@@ -117,10 +137,45 @@ export const Piano = ({ active = true }) => {
     };
   }, [active, playingNotes, setPlayingNotes]);
 
-  const whiteKeys = tetNotes.filter(({ color }) => color == "white");
-  const blackKeys = [...tetNotes.filter(({ color }) => color == "black")]
-    .toSpliced(2, 0, {})
-    .toSpliced(6, 0, {});
+  const envelope = { release: 5 };
+  console.log(playingNotes);
+
+  const renderNote = ({ note, freq, color }: NoteData) => {
+    if (!note || !freq) return null;
+    const playing = Boolean(playingNotes[note]);
+    return (
+      <div
+        key={note}
+        className={`absolute p-1 size-16 border-2 border-solid ${
+          playing ? "border-gray-100" : "border-gray-800"
+        } ${
+          color == "white"
+            ? "bg-gray-400 h-32"
+            : color == "black"
+            ? "bg-gray-900"
+            : "bg-blue-500"
+        }`}
+        style={{
+          marginLeft: `calc(${((freq / root) * 100 - 100) * 0.9}% - 2rem)`,
+        }}
+        onMouseDown={() => setPlaying(note, !playing)}
+        onMouseUp={() => setPlaying(note, false)}
+      >
+        <div>{note}</div>
+        <div>{displayNumber(freq)}</div>
+        <PlayNote
+          playing={playing}
+          waves={[
+            { freq, volume: 0.5, envelope },
+            { freq: freq * 2, volume: 0.1, envelope },
+            { freq: freq * 4, volume: 0.05, envelope },
+            { freq: freq * 8, volume: 0.04, envelope },
+            { freq: freq * 16, volume: 0.03, envelope },
+          ]}
+        />
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -138,78 +193,10 @@ export const Piano = ({ active = true }) => {
       <div className="px-16 w-96">
         {fractionNotes.map((row, index) => (
           <div key={index} className="size-16 my-1">
-            {row.map(({ note, freq }) => {
-              if (!note || !freq) return null;
-              const playing = Boolean(playingNotes[note]);
-              return (
-                <div
-                  key={note}
-                  className={`absolute p-1 bg-blue-500 size-16 border-2 border-solid ${
-                    playing ? "border-gray-100" : "border-gray-800"
-                  }`}
-                  style={{
-                    marginLeft: `calc(${
-                      ((freq / root) * 100 - 100) * 0.9
-                    }% - 2rem)`,
-                  }}
-                  onMouseDown={() => setPlaying(note, !playing)}
-                  onMouseUp={() => setPlaying(note, false)}
-                >
-                  <div>{note}</div>
-                  <div>{freq.toFixed(2)}</div>
-                  <PlayNote
-                    playing={playing}
-                    waves={[
-                      { freq, volume: 0.5 },
-                      { freq: freq * 2, volume: 0.25 },
-                      { freq: freq * 4, volume: 0.2 },
-                      { freq: freq * 8, volume: 0.15 },
-                      { freq: freq * 16, volume: 0.1 },
-                    ]}
-                  />
-                </div>
-              );
-            })}
+            {row.map(renderNote)}
           </div>
         ))}
-        <div className="">
-          {tetNotes.map(({ note, freq, color }) => {
-            if (!note || !freq) return null;
-            const playing = Boolean(playingNotes[note]);
-            return (
-              <div
-                key={note}
-                className={`absolute p-1 border-2 border-solid ${
-                  playing ? "border-gray-100" : "border-gray-800"
-                } ${
-                  color == "white"
-                    ? "bg-gray-400 h-32 w-16"
-                    : "size-16 bg-gray-900"
-                }`}
-                style={{
-                  marginLeft: `calc(${
-                    ((freq / root) * 100 - 100) * 0.9
-                  }% - 2rem)`,
-                }}
-                onMouseDown={() => setPlaying(note, !playingNotes[note])}
-                onMouseUp={() => setPlaying(note, false)}
-              >
-                <div>{note}</div>
-                <div>{freq.toFixed(2)}</div>
-                <PlayNote
-                  playing={Boolean(playingNotes[note])}
-                  waves={[
-                    { freq, volume: 0.5 },
-                    { freq: freq * 2, volume: 0.25 },
-                    { freq: freq * 4, volume: 0.2 },
-                    { freq: freq * 8, volume: 0.15 },
-                    { freq: freq * 16, volume: 0.1 },
-                  ]}
-                />
-              </div>
-            );
-          })}
-        </div>
+        <div className="">{tetNotes.map(renderNote)}</div>
       </div>
     </div>
   );
