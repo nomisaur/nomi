@@ -114,7 +114,10 @@ export const Piano = ({ active = true }) => {
                 playing={Boolean(playingNotes[note])}
                 waves={[
                   { freq, volume: 0.5 },
-                  { freq: freq * 1.5, volume: 0.25 },
+                  { freq: freq * 2, volume: 0.25 },
+                  { freq: freq * 4, volume: 0.2 },
+                  { freq: freq * 8, volume: 0.15 },
+                  { freq: freq * 16, volume: 0.1 },
                 ]}
               />
             </div>
