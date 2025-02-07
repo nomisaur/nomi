@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useMusicContext } from "../hooks";
 
-export const PlayNote = ({
+type WaveType = "sine" | "square" | "sawtooth" | "triangle" | "custom";
+
+export const PlayWave = ({
   playing,
   frequency,
   volume = 1,
@@ -12,6 +14,19 @@ export const PlayNote = ({
     release = 2,
     peak = 1,
   } = {},
+  type = "sine",
+}: {
+  playing: boolean;
+  frequency: number;
+  volume?: number;
+  envelope?: {
+    attack?: number;
+    decay?: number;
+    sustain?: number;
+    release?: number;
+    peak?: number;
+  };
+  type?: WaveType;
 }) => {
   const { audioCtx, masterGain } = useMusicContext();
 
@@ -49,6 +64,8 @@ export const PlayNote = ({
       const envGain = envGainRef.current;
       const noteGain = noteGainRef.current;
 
+      osc.type = type;
+
       if (envGain) osc?.connect(envGain);
       if (noteGain) envGain?.connect(noteGain);
       if (masterGain) noteGain?.connect(masterGain);
@@ -68,7 +85,9 @@ export const PlayNote = ({
     } else {
       stop();
     }
-    return () => playing && stop();
+    return () => {
+      playing && stop();
+    };
   }, [playing]);
 
   useEffect(() => {
