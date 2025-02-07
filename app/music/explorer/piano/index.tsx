@@ -121,11 +121,11 @@ export const Piano = ({ active = true }) => {
     if (!active) return;
     const handleKeyDown = (event) => {
       const note = LAYOUT[event.code];
-      setPlaying(note, true);
+      if (note && !playingNotes[note]) setPlaying(note, true);
     };
     const handleKeyUp = (event) => {
       const note = LAYOUT[event.code];
-      setPlaying(note, false);
+      if (note && playingNotes[note]) setPlaying(note, false);
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -135,10 +135,9 @@ export const Piano = ({ active = true }) => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [active, playingNotes, setPlayingNotes]);
+  }, [active, playingNotes, setPlayingNotes, setPlaying]);
 
   const envelope = { release: 5 };
-  console.log(playingNotes);
 
   const renderNote = ({ note, freq, color }: NoteData) => {
     if (!note || !freq) return null;
