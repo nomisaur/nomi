@@ -57,7 +57,7 @@ const getNotes = (root) =>
     ];
   }, []);
 
-export const Piano = ({ active }) => {
+export const Piano = ({ active = true }) => {
   const [playingNotes, setPlayingNotes] = useState({});
   const setPlaying = (note, playing) => {
     setPlayingNotes({ ...playingNotes, [note]: playing });
