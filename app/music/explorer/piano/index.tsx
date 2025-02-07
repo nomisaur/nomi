@@ -90,7 +90,17 @@ export const Piano = () => {
 
   return (
     <div>
-      <div>hello</div>
+      <div>
+        root:
+        <input
+          type="number"
+          value={middleC}
+          onChange={(e) => {
+            const value = parseFloat(e.target.value);
+            if (!Number.isNaN(value)) setMiddleC(value);
+          }}
+        />
+      </div>
       {notes.map(({ note, color, freq }) => {
         return (
           <div key={note}>
