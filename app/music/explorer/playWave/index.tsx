@@ -86,7 +86,7 @@ export const PlayWave = ({
       stop();
     }
     return () => {
-      playing && stop();
+      if (playing) stop();
     };
   }, [playing]);
 
