@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PlayWave } from "../playWave";
+import { PlayNote } from "../playNote";
 
 const TET_CONSTANT = Math.pow(2, 1 / 12);
 const MIDDLE_C = 440 * Math.pow(1 / TET_CONSTANT, 9);
@@ -110,10 +110,12 @@ export const Piano = ({ active = true }) => {
               onMouseUp={() => setPlaying(note, false)}
             >
               {note}
-              <PlayWave
+              <PlayNote
                 playing={Boolean(playingNotes[note])}
-                frequency={freq}
-                volume={0.5}
+                waves={[
+                  { freq, volume: 0.5 },
+                  { freq: freq * 1.5, volume: 0.25 },
+                ]}
               />
             </div>
           </div>

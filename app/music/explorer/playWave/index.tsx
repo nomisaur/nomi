@@ -5,7 +5,7 @@ type WaveType = "sine" | "square" | "sawtooth" | "triangle" | "custom";
 
 export const PlayWave = ({
   playing,
-  frequency,
+  freq,
   volume = 1,
   envelope: {
     attack = 0.01,
@@ -17,7 +17,7 @@ export const PlayWave = ({
   type = "sine",
 }: {
   playing: boolean;
-  frequency: number;
+  freq: number;
   volume?: number;
   envelope?: {
     attack?: number;
@@ -73,7 +73,7 @@ export const PlayWave = ({
       const currentTime = audioCtx?.currentTime ?? Date.now();
 
       noteGain?.gain.setValueAtTime(noteVolume, currentTime);
-      osc?.frequency.setValueAtTime(frequency, currentTime);
+      osc?.frequency.setValueAtTime(freq, currentTime);
       envGain?.gain.setValueAtTime(0, currentTime);
       envGain?.gain.linearRampToValueAtTime(peakVolume, currentTime + attack);
       envGain?.gain.exponentialRampToValueAtTime(
@@ -94,9 +94,9 @@ export const PlayWave = ({
     const osc = oscRef.current;
     const currentTime = audioCtx?.currentTime ?? Date.now();
     if (osc?.frequency) {
-      osc.frequency.linearRampToValueAtTime(frequency, currentTime + 0.05);
+      osc.frequency.linearRampToValueAtTime(freq, currentTime + 0.05);
     }
-  }, [frequency]);
+  }, [freq]);
 
   useEffect(() => {
     const noteGain = noteGainRef.current;
