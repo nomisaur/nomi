@@ -19,8 +19,8 @@ const TET_NOTES = [
 
 const FRACTION_ROWS = 50;
 const rowsToInclude = [
-  8, 12,
-  // 16, 24
+  // 7,9,10,11,
+  8, 12, 16, 24,
 ];
 
 type Fraction = [number, number];
@@ -174,6 +174,8 @@ export const Piano = ({ active = true }) => {
             ? "bg-gray-400 h-32"
             : color == "black"
             ? "bg-gray-900"
+            : playing
+            ? "bg-teal-400"
             : "bg-blue-500"
         }`}
         style={{
