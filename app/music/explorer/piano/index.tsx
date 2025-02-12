@@ -17,7 +17,11 @@ const TET_NOTES = [
   "2c",
 ] as const;
 
-const FRACTION_ROWS = 16;
+const FRACTION_ROWS = 50;
+const rowsToInclude = [
+  8, 12,
+  // 16, 24
+];
 
 type Fraction = [number, number];
 const FRACTIONS = Array(FRACTION_ROWS)
@@ -30,6 +34,10 @@ const FRACTIONS = Array(FRACTION_ROWS)
         const top = bottom + i2;
         return [top, bottom] as Fraction;
       });
+  })
+  .filter((_, index) => {
+    const row = index + 1;
+    return rowsToInclude.includes(row);
   });
 
 type Note = string;
@@ -70,6 +78,19 @@ const LAYOUT = {
   BracketLeft: "22/12",
   BracketRight: "23/12",
   Backslash: "24/12",
+  Digit1: "8/8",
+  Digit2: "8/8",
+  Digit3: "9/8",
+  Digit4: "10/8",
+  Digit5: "10/8",
+  Digit6: "11/8",
+  Digit7: "12/8",
+  Digit8: "12/8",
+  Digit9: "13/8",
+  Digit0: "14/8",
+  Minus: "14/8",
+  Equal: "15/8",
+  Backspace: "16/8",
 };
 
 const getTetNotes = (root) =>
@@ -97,6 +118,7 @@ const getFractionNotes = (root) =>
   );
 
 const displayNumber = (num) => {
+  // return num;
   const string = num.toFixed(2);
   const [whole, decimal] = string.split(".");
   const dec = parseInt(decimal);
@@ -165,11 +187,10 @@ export const Piano = ({ active = true }) => {
         <PlayNote
           playing={playing}
           waves={[
-            { freq, volume: 0.5, envelope },
-            { freq: freq * 2, volume: 0.1, envelope },
-            { freq: freq * 4, volume: 0.05, envelope },
-            { freq: freq * 8, volume: 0.04, envelope },
-            { freq: freq * 16, volume: 0.03, envelope },
+            { freq, volume: 1, envelope },
+            { freq: freq * 2, volume: 0.05, envelope },
+            { freq: freq * 4, volume: 0.025, envelope },
+            { freq: freq * 8, volume: 0.00625, envelope },
           ]}
         />
       </div>
