@@ -117,6 +117,33 @@ const getFractionNotes = (root) =>
     )
   );
 
+const getTetOvertones = (root, volume, envelope) => {
+  return [
+    { freq: root, volume, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 12), volume: volume / 2, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 19), volume: volume / 3, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 24), volume: volume / 4, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 28), volume: volume / 5, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 31), volume: volume / 6, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 34), volume: volume / 7, envelope },
+    { freq: root * Math.pow(TET_CONSTANT, 36), volume: volume / 8, envelope },
+    // { freq: root * Math.pow(TET_CONSTANT, 38), volume: volume / 8, envelope },
+  ];
+};
+
+const getOvertones = (root, volume, envelope) => {
+  return [
+    { freq: root, volume, envelope },
+    { freq: root * 2, volume: volume / 2, envelope },
+    { freq: root * 3, volume: volume / 3, envelope },
+    { freq: root * 4, volume: volume / 4, envelope },
+    { freq: root * 5, volume: volume / 5, envelope },
+    { freq: root * 6, volume: volume / 6, envelope },
+    { freq: root * 7, volume: volume / 7, envelope },
+    { freq: root * 8, volume: volume / 8, envelope },
+  ];
+};
+
 const displayNumber = (num) => {
   // return num;
   const string = num.toFixed(2);
@@ -133,6 +160,8 @@ export const Piano = ({ active = true }) => {
   const [root, setRoot] = useState(MIDDLE_C);
   const [tetNotes, setTetNotes] = useState(getTetNotes(root));
   const [fractionNotes, setFractionNotes] = useState(getFractionNotes(root));
+
+  const [usingTetOvertones, setUsingTetOvertones] = useState(false);
 
   useEffect(() => {
     setTetNotes(getTetNotes(root));
@@ -159,7 +188,7 @@ export const Piano = ({ active = true }) => {
     };
   }, [active, playingNotes, setPlayingNotes, setPlaying]);
 
-  const envelope = { release: 5 };
+  const envelope = { release: 9 };
 
   const renderNote = ({ note, freq, color }: NoteData) => {
     if (!note || !freq) return null;
@@ -188,12 +217,11 @@ export const Piano = ({ active = true }) => {
         <div>{displayNumber(freq)}</div>
         <PlayNote
           playing={playing}
-          waves={[
-            { freq, volume: 1, envelope },
-            { freq: freq * 2, volume: 0.05, envelope },
-            { freq: freq * 4, volume: 0.025, envelope },
-            { freq: freq * 8, volume: 0.00625, envelope },
-          ]}
+          waves={(usingTetOvertones ? getTetOvertones : getOvertones)(
+            freq,
+            1,
+            envelope
+          )}
         />
       </div>
     );
@@ -211,6 +239,14 @@ export const Piano = ({ active = true }) => {
             if (!Number.isNaN(value)) setRoot(value);
           }}
         />
+      </div>
+      <div>
+        TET overtones:
+        <input
+          type={"checkbox"}
+          checked={usingTetOvertones}
+          onChange={() => setUsingTetOvertones(!usingTetOvertones)}
+        ></input>
       </div>
       <div className="px-16 w-96">
         {fractionNotes.map((row, index) => (
