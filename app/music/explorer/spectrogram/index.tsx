@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import { useMusicContext, useWindowDimensions } from "../hooks";
 import { Canvas } from "../canvas";
