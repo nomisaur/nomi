@@ -1,5 +1,4 @@
 import { Title } from "../components/title";
-import { Clicker } from "../components/clicker";
 import { useChapter } from "../state";
 
 export const Chapter4 = () => {
